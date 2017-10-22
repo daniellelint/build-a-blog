@@ -9,7 +9,7 @@
     {% else %}
 
         {% for entry in posts %}
-            <h1><a href="">{{entry.heading}}</a></h1>
+            <h1><a href="/blog?query_new_post/{{entry.id}}">{{entry.heading}}</a></h1>
             <p class="restrict_length">{{entry.content}}</p>
             <hr />
         {% endfor %}

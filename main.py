@@ -51,6 +51,9 @@ def start():
 # TEMPLATE WILL:
 # DISPLAY ALL ENTRIES ON /blog
 # DISPLAY ENTRY TITLES AS LINK W/ QUERY URL
+# TEMPLATE FOR SPECIFIC ENTRIES
+    # designate specific entry displayed by using a query param with the id for that entry in the url.
+    # Then handler can get the entry with the id from the db and pass it to the template
     # REVIEW QUERY/PARAMS = Forms in Flask: Accessing Get Request Parameters.
         
         # format that we want the url of a single blog entry to have: 
@@ -89,6 +92,10 @@ def main_page():
         db.session.commit()
     posts = Blog.query.all()
     return render_template('blog.html',tab_title="Blog Home Page",page_header="Blogs:", posts=posts)
+
+def query_new_post(entry_id):
+    single_entry = Blog.query.get(entry_id)
+    return render_template('/new_entry',tab_title="Your New Entry",page_header="Most Recent Entry",single_entry=single_entry)
 
 #---------------------------------------------------------
 # TEMPLATE EXTENDS BASE
@@ -134,25 +141,9 @@ def validate_submit_form():
             db.session.add(new_entry)
             db.session.commit()
             posts = Blog.query.all()           
-            return redirect('/entry')
+            return redirect('/blog')
     
     return render_template('form.html',tab_title="New Entry",page_header="New Post")
-
-#---------------------------------------------------------
-# TEMPLATE EXTENDS BASE
-    # (base.html) DISPLAY NAV LINKS TO:
-        # /blog PAGE THAT DISPLAYS ALL ENTRIES
-        # /new_entry PAGE THAT HANDLES THE FORM
-# TEMPLATE FOR SPECIFIC ENTRIES
-    # designate specific entry displayed by using a query param with the id for that entry in the url.
-    # Then handler can get the entry with the id from the db and pass it to the template
-        # REVIEW QUERY/PARAMS = Forms in Flask: Accessing Get Request Parameters.
-
-@app.route('/entry', methods=['GET'])
-def single_entry():
-    #insert code inorder to render_template
-    #return render_template('new_entry.html',tab_title="New Entry",page_header="id's title")
-    return redirect('/blog')
 
 #---------------------------------------------------------
 # "SHIELD THE CODE"
