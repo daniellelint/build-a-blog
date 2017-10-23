@@ -2,7 +2,7 @@
 
 {% block body %}
 
-    <title>{{entry.heading}}</title>
-    <p>{{entry.content}}</p>
+    <h1><a href="/blog?id={{single_entry.id}}">{{single_entry.heading}}</a></h1>
+    <p class="restrict_length">{{single_entry.content}}</p>
 
 {% endblock %}
